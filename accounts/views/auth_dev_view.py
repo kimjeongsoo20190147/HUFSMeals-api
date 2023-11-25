@@ -2,6 +2,21 @@ from rest_framework.views import APIView
 import requests
 from django.shortcuts import redirect
 from rest_framework.response import Response
+class GoogleLoginApi(APIView):
+    def get(self, request):
+        app_key = "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com"
+        scope = "https://www.googleapis.com/auth/userinfo.email " + \
+                "https://www.googleapis.com/auth/userinfo.profile"
+        
+        redirect_uri = "http://127.0.0.1:8000/accounts/login/"
+        google_auth_api = "https://accounts.google.com/o/oauth2/v2/auth"
+
+        response = redirect(
+            f"{google_auth_api}?client_id={app_key}&response_type=code&redirect_uri={redirect_uri}&scope={scope}"
+        )
+        
+        return response
+
 
 class GoogleLogin(APIView):
     def google_login(self, request):
