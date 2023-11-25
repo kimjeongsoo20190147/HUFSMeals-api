@@ -12,7 +12,7 @@ class GoogleLogin(APIView):
     액세슨 토큰 발급 view
     """
     def get(self, request, code):
-        code = request.GET["code"]
+        code = code
         token_url = "https://oauth2.googleapis.com/token"
         data = {
             "client_id" : "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com",
