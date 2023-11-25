@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 
     # apps
-    'account',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -200,3 +200,5 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
 }
+
+AUTH_USER_MODEL = 'accounts.User'
