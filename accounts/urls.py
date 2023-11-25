@@ -5,6 +5,7 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('login/<str:code>/', GoogleLogin.as_view()),
+    path('nickname/', SetNickname.as_view()),
 
     # 개발자용
     path('google/', GoogleLoginApi.as_view()),

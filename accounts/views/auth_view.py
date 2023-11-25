@@ -33,15 +33,25 @@ class GoogleLogin(APIView):
         if user is not None:
             token = TokenObtainPairSerializer.get_token(user)
             access_token = str(token.access_token)
-            res = {
-                "msg" : "기존 사용자 로그인 성공",
-                "code" : "a-S001",
-                "data" : {
-                    "access_token" : access_token,
-                    "user_info" : UserInfoSerializer(user).data, 
-                    "exist_user" : True
+            if user.nickname == None:
+                res = {
+                    "msg" : "새로운 사용자 로그인 성공",
+                    "code" : "a-S002",
+                    "data" : {
+                        "access_token" : access_token,
+                        "exist_user" : False
+                    }
                 }
-            }
+            else:
+                res = {
+                    "msg" : "기존 사용자 로그인 성공",
+                    "code" : "a-S001",
+                    "data" : {
+                        "access_token" : access_token,
+                        "user_info" : UserInfoSerializer(user).data, 
+                        "exist_user" : True
+                    }
+                }
             return Response(res, status=status.HTTP_200_OK)
         
         country = user_information['locale']
