@@ -10,7 +10,7 @@ from ..serializers import *
 
 class GoogleLoginApi(APIView):
     """
-    구글 로그인 페이지 접속 view
+    개발자용 구글 로그인 페이지 접속 view
     """
     def get(self, request):
         app_key = "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com"
@@ -29,7 +29,7 @@ class GoogleLoginApi(APIView):
 
 class DevGoogleLogin(APIView):
     """
-    액세슨 토큰 발급 view
+    개발자용 액세슨 토큰 발급 view
     """
     def get(self, request):
         code = request.GET["code"]

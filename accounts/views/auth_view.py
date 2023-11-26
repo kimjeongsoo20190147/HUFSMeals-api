@@ -9,7 +9,7 @@ from ..serializers import *
 
 class GoogleLogin(APIView):
     """
-    액세슨 토큰 발급 view
+    일반 사용자 액세슨 토큰 발급 view
     """
     def get(self, request, code):
         code = code
@@ -19,7 +19,7 @@ class GoogleLogin(APIView):
             "client_secret" : "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",
             "code" : code,
             "grant_type" : 'authorization_code',
-            "redirect_uri" : "http://127.0.0.1:8000/accounts/login/"
+            "redirect_uri" : "http://127.0.0.1:8000/accounts/login/" # 배포 후 수정 요망
         }
         
         access_token = requests.post(token_url, data=data).json().get('access_token')
