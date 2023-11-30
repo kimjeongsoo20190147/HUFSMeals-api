@@ -7,9 +7,11 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, Toke
 from ..models import *
 from ..serializers import *
 
+lang_lst = ['ko', 'en', 'ja', 'zh-CN', 'zh-TW', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr']
+
 class GoogleLogin(APIView):
     """
-    액세슨 토큰 발급 view
+    일반 사용자 액세슨 토큰 발급 view
     """
     def get(self, request, code):
         code = code
@@ -19,7 +21,7 @@ class GoogleLogin(APIView):
             "client_secret" : "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",
             "code" : code,
             "grant_type" : 'authorization_code',
-            "redirect_uri" : "http://127.0.0.1:8000/accounts/login/"
+            "redirect_uri" : "http://127.0.0.1:8000/accounts/login/" # 배포 후 수정 요망
         }
         
         access_token = requests.post(token_url, data=data).json().get('access_token')
@@ -55,6 +57,10 @@ class GoogleLogin(APIView):
             return Response(res, status=status.HTTP_200_OK)
         
         country = user_information['locale']
+
+        if country not in lang_lst:
+            country = "en" # 해당 국가에 대한 번역을 지원하지 않을 경우 영어로 통일
+
         new_user = User(google_id = google_id, country = country)
         new_user.save()
         token = TokenObtainPairSerializer.get_token(new_user)
