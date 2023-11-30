@@ -7,10 +7,11 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, Toke
 from ..models import *
 from ..serializers import *
 
+lang_lst = ['ko', 'en', 'ja', 'zh-CN', 'zh-TW', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr']
 
 class GoogleLoginApi(APIView):
     """
-    구글 로그인 페이지 접속 view
+    개발자용 구글 로그인 페이지 접속 view
     """
     def get(self, request):
         app_key = "694730838559-u7slukjsulo3h4r0qhjln4ah8lnjmftt.apps.googleusercontent.com"
@@ -29,7 +30,7 @@ class GoogleLoginApi(APIView):
 
 class DevGoogleLogin(APIView):
     """
-    액세슨 토큰 발급 view
+    개발자용 액세슨 토큰 발급 view
     """
     def get(self, request):
         code = request.GET["code"]
@@ -65,6 +66,10 @@ class DevGoogleLogin(APIView):
             return Response(res, status=status.HTTP_200_OK)
         
         country = user_information['locale']
+        
+        if country not in lang_lst:
+            country = "en" # 해당 국가에 대한 번역을 지원하지 않을 경우 영어로 통일
+
         new_user = User(google_id = google_id, country = country)
         new_user.save()
         token = TokenObtainPairSerializer.get_token(new_user)
