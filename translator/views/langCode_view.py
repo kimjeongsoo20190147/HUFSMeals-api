@@ -42,7 +42,7 @@ class GetLangCode(APIView):
                 return Response(res, status = status.HTTP_200_OK)
         else:
             res = {
-                "code" : "t-F001",
+                "code" : "t-F002",
                 "msg" : "API 사용량 초과"
             }
             return Response(res, status = status.HTTP_403_FORBIDDEN)
