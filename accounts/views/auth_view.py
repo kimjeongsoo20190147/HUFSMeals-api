@@ -55,7 +55,9 @@ class GoogleLogin(APIView):
             return Response(res, status=status.HTTP_200_OK)
         
         country = user_information['locale']
+        # username = str(user_information['id'])
         new_user = User(google_id = google_id, country = country)
+        # new_user = User(username = username, google_id = google_id, country = country)
         new_user.save()
         token = TokenObtainPairSerializer.get_token(new_user)
         res = {
