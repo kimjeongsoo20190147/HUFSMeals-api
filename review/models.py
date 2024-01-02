@@ -1,9 +1,12 @@
 from django.db import models
 from accounts.models import User
 from restaurant.models import Restaurant
+import uuid
 
-def review_photo_path(instance, filename):
-    return f'review_photo/{instance.review.pk}'
+def review_image_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = f"{uuid.uuid4()}.{ext}"
+    return f'review_image/{instance.review.pk}/{filename}'
 
 class Review(models.Model):
     user = models.ForeignKey(User, null = True, on_delete = models.CASCADE)
@@ -18,6 +21,6 @@ class Review(models.Model):
         return self.title
     
 
-class ReviewPhoto(models.Model):
+class ReviewImage(models.Model):
     review = models.ForeignKey(Review, on_delete = models.CASCADE)
-    photo = models.ImageField(upload_to = review_photo_path, blank = True)
+    review_image = models.ImageField(upload_to = review_image_path, blank = True)

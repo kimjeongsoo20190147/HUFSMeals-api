@@ -1,10 +1,17 @@
 from django.db import models
+import uuid
 
 # Create your models here.
+def restaurant_images_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = f"{uuid.uuid4()}.{ext}"
+    return f'restaurant_images/{filename}'
+
 class Restaurant(models.Model):
     name = models.CharField(max_length = 50)
-    latitude = models.FloatField(default = 0.0)
-    longitude = models.FloatField(default = 0.0)
+    restaurant_image = models.ImageField(upload_to = restaurant_images_path, blank = True, null = True)
+    latitude = models.CharField(max_length = 20)
+    longitude = models.CharField(max_length = 20)
     opening_hours = models.TextField(default = "")
     address = models.CharField(max_length = 200)
     category = models.CharField(max_length = 50)
@@ -14,9 +21,11 @@ class Restaurant(models.Model):
 
 
 def menu_images_path(instance, filename):
-    return f'menu_images/{instance.restaurant.pk}'
+    ext = filename.split('.')[-1]
+    filename = f"{uuid.uuid4()}.{ext}"
+    return f'menu_images/{instance.restaurant.name}_{instance.restaurant.pk}/{filename}'
 
 class Menu(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE)
     name = models.CharField(max_length = 50)
-    image = models.ImageField(upload_to = menu_images_path, blank = True, null = True)
+    menu_image = models.ImageField(upload_to = menu_images_path, blank = True, null = True)

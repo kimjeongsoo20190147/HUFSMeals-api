@@ -1,1 +1,1 @@
-from .create_restaurant import *
+from .restaurant_register_view import *
