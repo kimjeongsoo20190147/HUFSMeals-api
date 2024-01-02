@@ -1,8 +1,8 @@
 from django.urls import path
-from accounts.views import *
+from restaurant.views import *
 
 app_name = 'restaurant'
 
 urlpatterns = [
-    
+    path('create/', RestaurantRegisterView.as_view()),
 ]
