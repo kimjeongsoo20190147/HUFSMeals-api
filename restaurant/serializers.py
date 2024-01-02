@@ -3,7 +3,7 @@ from .models import *
 
 class CreateRestaurantSerializer(serializers.ModelSerializer):
     """
-    레스토랑 생성 시리얼라이저
+    식당 생성 시리얼라이저
     """
     class Meta:
         model = Restaurant
@@ -12,7 +12,7 @@ class CreateRestaurantSerializer(serializers.ModelSerializer):
 
 class RestaurantInfoSerializer(serializers.ModelSerializer):
     """
-    레스토랑 정보 시리얼라이저
+    식당 정보 시리얼라이저
     """
     class Meta:
         model = Restaurant
