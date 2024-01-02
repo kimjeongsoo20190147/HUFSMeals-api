@@ -1,8 +1,12 @@
 from django.db import models
 
 # Create your models here.
+def restaurant_images_path(instance, filename):
+    return f'restaurant_images'
+
 class Restaurant(models.Model):
     name = models.CharField(max_length = 50)
+    restaurant_image = models.ImageField(upload_to = restaurant_images_path, blank = True, null = True)
     latitude = models.FloatField(default = 0.0)
     longitude = models.FloatField(default = 0.0)
     opening_hours = models.TextField(default = "")
@@ -14,9 +18,9 @@ class Restaurant(models.Model):
 
 
 def menu_images_path(instance, filename):
-    return f'menu_images/{instance.restaurant.pk}'
+    return f'menu_images/{instance.restaurant.name}_{instance.restaurant.pk}'
 
 class Menu(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE)
     name = models.CharField(max_length = 50)
-    image = models.ImageField(upload_to = menu_images_path, blank = True, null = True)
+    menu_image = models.ImageField(upload_to = menu_images_path, blank = True, null = True)
