@@ -7,8 +7,8 @@ def restaurant_images_path(instance, filename):
 class Restaurant(models.Model):
     name = models.CharField(max_length = 50)
     restaurant_image = models.ImageField(upload_to = restaurant_images_path, blank = True, null = True)
-    latitude = models.FloatField(default = 0.0)
-    longitude = models.FloatField(default = 0.0)
+    latitude = models.CharField(max_length = 20)
+    longitude = models.CharField(max_length = 20)
     opening_hours = models.TextField(default = "")
     address = models.CharField(max_length = 200)
     category = models.CharField(max_length = 50)
